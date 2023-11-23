@@ -1,15 +1,54 @@
-import moviepy.editor as mp
+import tkinter as tk
+from tkinter import filedialog
+from moviepy.editor import VideoFileClip
 
-def video_to_audio(video_path, audio_path):
-    try:
-        video = mp.VideoFileClip(video_path)
-        video.audio.write_audiofile(audio_path)
-        print("Конвертация завершена!")
-    except Exception as e:
-        print(f"Произошла ошибка при конвертации видео в аудио: {str(e)}")
+def convert_video_to_audio(input_path, output_path):
+    video_clip = VideoFileClip(input_path)
+    audio_clip = video_clip.audio
+    audio_clip.write_audiofile(output_path)
+    audio_clip.close()
+    video_clip.close()
 
-# Пример использования
-video_file = "promo.mp4"
-audio_file = "audio.mp3"
+def browse_input_path():
+    input_path = filedialog.askopenfilename(filetypes=[("Video Files", "*.mp4;*.avi;*.mkv")])
+    input_entry.delete(0, tk.END)
+    input_entry.insert(0, input_path)
 
-video_to_audio(video_file, audio_file)
+def browse_output_path():
+    output_path = filedialog.asksaveasfilename(defaultextension=".mp3", filetypes=[("Audio Files", "*.mp3")])
+    output_entry.delete(0, tk.END)
+    output_entry.insert(0, output_path)
+
+def convert_button_click():
+    input_path = input_entry.get()
+    output_path = output_entry.get()
+    convert_video_to_audio(input_path, output_path)
+    result_label.config(text="Конвертация завершена!")
+
+# Создание главного окна
+root = tk.Tk()
+root.title("Конвертер видео в аудио")
+
+# Виджеты
+tk.Label(root, text="Выберите видеофайл:").pack()
+input_entry = tk.Entry(root, width=50)
+input_entry.pack()
+
+browse_input_button = tk.Button(root, text="Обзор", command=browse_input_path)
+browse_input_button.pack()
+
+tk.Label(root, text="Выберите место для сохранения аудио:").pack()
+output_entry = tk.Entry(root, width=50)
+output_entry.pack()
+
+browse_output_button = tk.Button(root, text="Обзор", command=browse_output_path)
+browse_output_button.pack()
+
+convert_button = tk.Button(root, text="Конвертировать", command=convert_button_click)
+convert_button.pack()
+
+result_label = tk.Label(root, text="")
+result_label.pack()
+
+# Запуск главного цикла
+root.mainloop()
