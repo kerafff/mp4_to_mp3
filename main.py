@@ -23,32 +23,38 @@ def convert_button_click():
     input_path = input_entry.get()
     output_path = output_entry.get()
     convert_video_to_audio(input_path, output_path)
-    result_label.config(text="Конвертация завершена!")
+    result_label.config(text="Конвертация Удалась!")
 
 # Создание главного окна
 root = tk.Tk()
-root.title("Конвертер видео в аудио")
+root.title("Конвертер Видео в Аудио")
+
+# Стилистика
+root.configure(bg="#F0F0F0")
+font_label = ("Arial", 12)
+font_entry = ("Arial", 10)
+font_button = ("Arial", 10, "bold")
 
 # Виджеты
-tk.Label(root, text="Выберите видеофайл:").pack()
-input_entry = tk.Entry(root, width=50)
-input_entry.pack()
+tk.Label(root, text="Выберите видео файл:", font=font_label, bg="#F0F0F0").grid(row=0, column=0, sticky=tk.W, padx=10, pady=10)
+input_entry = tk.Entry(root, width=50, font=font_entry)
+input_entry.grid(row=0, column=1, padx=10, pady=10)
 
-browse_input_button = tk.Button(root, text="Обзор", command=browse_input_path)
-browse_input_button.pack()
+browse_input_button = tk.Button(root, text="Обзор", font=font_button, command=browse_input_path)
+browse_input_button.grid(row=0, column=2, padx=10, pady=10)
 
-tk.Label(root, text="Выберите место для сохранения аудио:").pack()
-output_entry = tk.Entry(root, width=50)
-output_entry.pack()
+tk.Label(root, text="Выберите куда сохранить аудио:", font=font_label, bg="#F0F0F0").grid(row=1, column=0, sticky=tk.W, padx=10, pady=10)
+output_entry = tk.Entry(root, width=50, font=font_entry)
+output_entry.grid(row=1, column=1, padx=10, pady=10)
 
-browse_output_button = tk.Button(root, text="Обзор", command=browse_output_path)
-browse_output_button.pack()
+browse_output_button = tk.Button(root, text="Обзор", font=font_button, command=browse_output_path)
+browse_output_button.grid(row=1, column=2, padx=10, pady=10)
 
-convert_button = tk.Button(root, text="Конвертировать", command=convert_button_click)
-convert_button.pack()
+convert_button = tk.Button(root, text="Конвертировать", font=font_button, command=convert_button_click)
+convert_button.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
-result_label = tk.Label(root, text="")
-result_label.pack()
+result_label = tk.Label(root, text="", font=font_label, bg="#F0F0F0")
+result_label.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
 
 # Запуск главного цикла
 root.mainloop()
