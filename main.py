@@ -85,4 +85,3 @@ result_label.grid(row=3, column=0, columnspan=3, padx=10, pady=10)
 
 # Запуск главного цикла
 root.mainloop()
-
